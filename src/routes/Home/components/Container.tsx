@@ -28,8 +28,10 @@ const Container: React.FC<Props> = ({ title, children, authedData }) => {
           return null;
         case "faq":
           return null;
+        case "search":
+          return null;
         default:
-          return <Chat />;
+          return <Chat authedData={authedData} />;
       }
     }
   };

@@ -2,7 +2,7 @@
 /* eslint-disable no-useless-escape */
 import jwtDecode from "jwt-decode";
 import { useLocation } from "react-router";
-
+import { message } from "antd";
 export const onlyAlpha = (text) =>
   text
     .replace(/[0-9\/]+/g, "")
@@ -55,6 +55,26 @@ export const getDataSession = () => {
     return undefined;
   }
 };
+export const getDataAdminSession = () => {
+  const admin_access_token = localStorage.getItem("admin_access_token");
+  try {
+    //checking jwt
+    jwtDecode(admin_access_token, { header: false });
+    const data = jwtDecode(admin_access_token);
+    if (Date.now() >= data.exp * 1000) {
+      localStorage.removeItem("admin_access_token");
+    }
+    if (data.username == null || data.role == null) {
+      localStorage.removeItem("admin_access_token");
+      return undefined;
+    }
+    return data;
+  } catch (e){
+    localStorage.removeItem("admin_access_token");
+    return undefined;
+  }
+};
+
 
 export const xssValid = (value) =>
   value.match(/(<[^>]*>)/g) != null ||
@@ -147,3 +167,26 @@ export const convertDate = (item) => {
     yyyymmdd: `${year}-${String(newDate.getMonth()).padStart(2, "0")}-${date}`,
   };
 };
+
+export function beforeUpload(file) {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  if (!isJpgOrPng) {
+    console.log("You can only upload JPG/PNG file!");
+    message.error("Format Gambar Harus JPG/PNG");
+  }
+  const isLt5M = file.size / 1024 / 1024 < 5;
+  if (!isLt5M) {
+    console.log("Image must smaller than 5MB!");
+    message.error("Gambar Tidak Boleh Melebihi 5MB");
+  }
+  return isJpgOrPng && isLt5M;
+}
+
+export function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}

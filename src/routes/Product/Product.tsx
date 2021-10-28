@@ -32,9 +32,7 @@ const Product: React.FC<Props> = ({ authedData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataId]);
   useEffect(() => {
-    if (dataId?.data == null) {
-      dispatch(getProductByIDRequest(id));
-    }
+    dispatch(getProductByIDRequest(id));
     /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
@@ -48,7 +46,7 @@ const Product: React.FC<Props> = ({ authedData }) => {
           ) : dataId ? (
             <>
               <BreadCrumb />
-              <Content />
+              <Content authedData={authedData} />
             </>
           ) : (
             <Result

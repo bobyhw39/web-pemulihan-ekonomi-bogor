@@ -16,3 +16,12 @@ export const forgotPassword = (data: any) => {
 export const resetPassword = (data: any, id :any) => {
   return services.post(`${endPoint.pemulihanEkonomiUrl.v1}user/resetPassword?user_id=${id}`, data);
 };
+
+
+export const loginAdmin = (data: any) => {
+  return services.extPost(`${endPoint.pemulihanEkonomiUrl.v1}login-admin`, data);
+};
+
+export const logoutAdmin = (data: any) => {
+  return services.getLogout(`${endPoint.pemulihanEkonomiUrl.v1}logout`, data);
+};

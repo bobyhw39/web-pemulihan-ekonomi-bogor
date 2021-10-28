@@ -14,6 +14,9 @@ import InfoWisataDetails from "./Home/InfoWisata/InfoWisataDetails/";
 import Faq from "./Home/Faq";
 import Chat from "./Chat";
 import ResetPassword from "./Dashboard/ResetPassword";
+
+import AuthAdmin from "./DashboardAdmin/AuthAdmin";
+
 // import ForgotPassword from "./Auth/ForgotPassword";
 // import ForgotPasswordReset from "./Auth/ForgotPassowrdReset";
 
@@ -37,6 +40,9 @@ export const routes = [
 export const noAuthRoutes = [
   { path: "/register", component: Register, exact: true },
   { path: "/login", component: Auth },
+];
+export const noAuthAdminRoutes = [
+  { path: "/admin-login", component: AuthAdmin, exact: true },
 ];
 
 export const protectedRoutes = [

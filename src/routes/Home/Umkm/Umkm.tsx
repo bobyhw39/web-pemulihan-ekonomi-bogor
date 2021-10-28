@@ -25,7 +25,7 @@ import IcShopee from "../../../assets/peb-shopee.svg";
 import IcTokped from "../../../assets/peb-tokped.svg";
 import IcLazada from "../../../assets/peb-lazada.svg";
 import IcBukalapak from "../../../assets/peb-bukalapak.svg";
-import { Link } from "react-router-dom";
+import history from "../../../utils/history";
 
 const { Option } = Select;
 type Props = {
@@ -51,6 +51,17 @@ const Umkm: React.FC<Props> = ({ authedData }) => {
   const openWhatsapp = (no_hp: any) => {
     window.open(`https://wa.me/${no_hp}`, "_blank");
   };
+
+  const goTo = (item: any) => {
+    history.push({
+      pathname: "/chat",
+      state: {
+        email: item?.email,
+        id: item?.id,
+        namaUmkm: item?.nama_umkm,
+      },
+    });
+  };
   const onClickUmkm = (item: any) => {
     Modal.info({
       title: item?.umkm_detail?.no_regis_umkm || "",
@@ -70,13 +81,6 @@ const Umkm: React.FC<Props> = ({ authedData }) => {
                   ></Button>
                 </Tooltip>
               ) : null}
-              {authedData == null ? null : (
-                <Link to={{ pathname: "/chat", state: item?.email }}>
-                  <Button type="link" icon={<WechatOutlined />} size="middle">
-                    Chat
-                  </Button>
-                </Link>
-              )}
             </div>
           </div>
           <div className="peb-umkm-modal-detail">
@@ -171,7 +175,6 @@ const Umkm: React.FC<Props> = ({ authedData }) => {
       closeIcon: true,
     });
   };
-
   return (
     <Container title="Daftar UMKM" authedData={authedData}>
       <div className="container mt-2 mb-2">
@@ -193,23 +196,38 @@ const Umkm: React.FC<Props> = ({ authedData }) => {
         >
           <div className="site-card-wrapper">
             <Spin spinning={isLoading ?? false} tip="Memuat...">
-              <List
-                itemLayout="horizontal"
-                dataSource={datas?.data?.data}
-                renderItem={(item: any) => (
-                  <List.Item
-                    className="peb-umkm"
-                    onClick={() => onClickUmkm(item)}
-                  >
+              <List itemLayout="horizontal">
+                {datas?.data?.data.map((item: any) => (
+                  <List.Item>
                     <List.Item.Meta
                       title={
-                        <a href="https://ant.design">{item?.nama_umkm ?? ""}</a>
+                        <>
+                          <Button onClick={() => onClickUmkm(item)} type="link">
+                            {item?.nama_umkm ?? ""}
+                          </Button>
+                        </>
                       }
-                      description={item?.umkm_detail?.alamat_umkm}
+                      description={
+                        <>
+                          <Button onClick={() => onClickUmkm(item)} type="text">
+                            {item?.umkm_detail?.alamat_umkm}{" "}
+                          </Button>
+                        </>
+                      }
                     />
+                    {authedData != null && authedData.user_id !== item?.id ? (
+                      <Button
+                        onClick={() => goTo(item)}
+                        type="link"
+                        icon={<WechatOutlined />}
+                        size="middle"
+                      >
+                        Chat
+                      </Button>
+                    ) : null}
                   </List.Item>
-                )}
-              />
+                ))}
+              </List>
             </Spin>
           </div>
 

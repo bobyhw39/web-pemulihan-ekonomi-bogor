@@ -37,7 +37,7 @@ const Header: React.FC<Props> = ({ authedData }) => {
   };
 
   useEffect(() => {
-    dispatch(getCategoriesRequest(99));
+    dispatch(getCategoriesRequest({ perPage: 99, page: 1 }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onGo = (to: string) => {

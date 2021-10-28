@@ -26,7 +26,7 @@ const Banner: React.FC<Props> = ({data}) => {
       <Flicking
         circular={true}
         plugins={_plugins}
-        resizeOnContentsReady={true}
+        // resizeOnContentsReady={true}
         adaptive={true}
       >
         {data()?.map((v: any, k: any) => (

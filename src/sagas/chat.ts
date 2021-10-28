@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as chatAction from "../actions/chat";
 import { ResponseGenerator } from "../models/RootState";
-import { getAllUserChat, getHistoryChat, sendMessage } from "../requests/chat";
+import { getAllUserChat, getHistoryChat, sendMessage , getAllUsersChat} from "../requests/chat";
 import { notificationMessage } from "../utils/notifications";
 import { scrollToBottomChat } from "../utils/utils";
 
@@ -16,6 +16,24 @@ export function* getAllUserChatF(action: any) {
   } catch (e: any) {
     yield put({
       type: chatAction.GET_ALL_USER_CHAT_ERROR,
+      error: e,
+      message: "Oups, Error",
+    });
+    notificationMessage("error", `Ada kesalahan`, ``);
+  }
+}
+
+export function* getAllUsersF(action: any) {
+  try {
+    const response: ResponseGenerator = yield call(getAllUsersChat);
+    let data = response.data;
+    yield put({
+      type: chatAction.GET_ALL_USERS_CHAT_SUCCESS,
+      data,
+    });
+  } catch (e: any) {
+    yield put({
+      type: chatAction.GET_ALL_USERS_CHAT_ERROR,
       error: e,
       message: "Oups, Error",
     });
@@ -72,6 +90,7 @@ export function* sendMessageF(action: any) {
 }
 
 export default all([
+  takeLatest(chatAction.GET_ALL_USERS_CHAT_REQUEST, getAllUsersF),
   takeLatest(chatAction.GET_ALL_USER_CHAT_REQUEST, getAllUserChatF),
   takeLatest(chatAction.GET_HISTORY_CHAT_REQUEST, getHistoryChatF),
   takeLatest(chatAction.SEND_CHAT_REQUEST, sendMessageF),

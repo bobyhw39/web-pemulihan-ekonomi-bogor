@@ -10,15 +10,17 @@ import IcBukalapak from "../../../assets/peb-bukalapak.svg";
 import { RootState } from "../../../models/RootState";
 import { useSelector } from "react-redux";
 import { capitalize, formatMoney } from "../../../utils/utils";
-import history from "../../../utils/history";
+import { AuthUser } from "../../../models/AuthUser";
 
 const { TabPane } = Tabs;
 
 function callback(key: any) {
   console.log(key);
 }
-
-export default function Product() {
+type Props = {
+  authedData?: AuthUser;
+};
+const Product: React.FC<Props> = ({ authedData }) => {
   const { dataId } = useSelector((state: RootState) => state.product);
   const ecommerceUrl = dataId?.data?.url_ecommerce;
   const [copy, setcopy] = useState(false);
@@ -26,7 +28,7 @@ export default function Product() {
   const detailUmkm = data?.data?.umkm_detail;
   const categories = useSelector((state: RootState) => state.categories);
   const category = categories?.data?.data?.data?.find(
-    (v: any, i: any) => v.id === dataId?.data?.id_kategori
+    (v: any, i: any) => v.id === dataId?.data?.id_klasifikasi
   );
 
   useEffect(() => {
@@ -55,11 +57,22 @@ export default function Product() {
           Rp {formatMoney(dataId?.data?.harga_produk || "")}
         </h3>
         <div className="peb-">
-          <Link to={{ pathname: "/chat", state: data?.data?.email }}>
-            <Button type="link" icon={<WechatOutlined />} size="middle">
-              Chat
-            </Button>
-          </Link>
+          {authedData && authedData.user_id !== data?.data?.id ? (
+            <Link
+              to={{
+                pathname: "/chat",
+                state: {
+                  email: data?.data?.email,
+                  id: data?.data?.id,
+                  namaUmkm: data?.data?.nama_umkm,
+                },
+              }}
+            >
+              <Button type="link" icon={<WechatOutlined />} size="middle">
+                Chat
+              </Button>
+            </Link>
+          ) : null}
           <Button
             onClick={onCopy}
             className={`peb-product-share ${copy ? "copied" : ""}`}
@@ -147,4 +160,5 @@ export default function Product() {
       </div>
     </div>
   );
-}
+};
+export default Product;

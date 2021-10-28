@@ -3,9 +3,10 @@ import { Helmet } from "react-helmet-async";
 
 type Props = {
   title: string;
+  color?: string
 };
 
-export const Layout: React.FC<Props> = ({ title, children }) => {
+export const Layout: React.FC<Props> = ({ title, children, color }) => {
   return (
     <>
       <Helmet>
@@ -15,8 +16,9 @@ export const Layout: React.FC<Props> = ({ title, children }) => {
         id="peb-layout"
         style={{
           minHeight: "100vh",
-          width:"100%",
+          width: "100%",
           position: "relative",
+          backgroundColor: color || "",
         }}
       >
         {children}

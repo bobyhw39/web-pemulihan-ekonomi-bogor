@@ -109,15 +109,18 @@
 }
 
 @media (max-width: 722px) {
-  .peb-navbar-top {
+  .peb-navbar-top,
+  .peb-navbar-bottom {
     padding-left: 28px;
     padding-right: 28px;
   }
 }
 @media (max-width: 548px) {
   .peb-navbar-user,
+  .peb-navbar-top-logo,
+  .peb-navbar-top-auth,
   .peb-list.peb-list-flex {
-    display: none;
+    display: none !important;
   }
   .peb-navbar-top-btn-drawer {
     display: flex;

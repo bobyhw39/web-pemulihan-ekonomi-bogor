@@ -10,7 +10,16 @@ export default function Images() {
   const [openImage, setopenImage] = useState(false);
   const [content, setcontent] = useState("");
   const { dataId } = useSelector((state: RootState) => state.product);
-  const imageUrl = dataId?.data?.url_gambar.split(",");
+  let imageUrl = [];
+  for (const key in dataId?.data?.url_gambar) {
+    if (Object.prototype.hasOwnProperty.call(dataId?.data?.url_gambar, key)) {
+      const element = dataId?.data?.url_gambar[key];
+      if (element !== "") {
+        imageUrl.push(element)
+        break;
+      }
+    }
+  }
   const onClickLinkImage = (l: any) => {
     setopenImage(true);
     setcontent(l);

@@ -34,12 +34,12 @@ const SearchPage: React.FC<Props> = ({ authedData }) => {
   const data = categories?.data?.data?.data || [];
   let query = useQuery();
   const queryData: any = {
-    category_id: query.get("category")||"",
-    perPage: query.get("per_page")||"10",
-    sort: query.get("sort")||"",
-    name: query.get("product_name")||"",
-    umkm_id: query.get("umkm")||"",
-    page: query.get("page")||"1",
+    category_id: query.get("category") || "",
+    perPage: query.get("per_page") || "10",
+    sort: query.get("sort") || "",
+    name: query.get("product_name") || "",
+    umkm_id: query.get("umkm") || "",
+    page: query.get("page") || "1",
   };
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,36 +57,36 @@ const SearchPage: React.FC<Props> = ({ authedData }) => {
     });
   };
 
-  const onChangeProductPageSize = (pageSize: any) => {
-    dispatch(getProducRequest({ ...queryData, pageSize }));
+  const onChangeProductPageSize = (perPage: any) => {
+    dispatch(getProducRequest({ ...queryData, perPage, page: 1 }));
     history.push({
       search: `category=${queryData.category_id || ""}&per_page=${
-        pageSize || ""
+        perPage || ""
       }&sort=${queryData.sort || ""}&product_name=${
         queryData.name || ""
-      }&umkm=${queryData.umkm_id || ""}&page=${queryData.page || ""}`,
+      }&umkm=${queryData.umkm_id || ""}&page=${1}`,
     });
   };
 
   const onChangeProductSort = (sort: any) => {
-    dispatch(getProducRequest({ ...queryData, sort }));
+    dispatch(getProducRequest({ ...queryData, sort, page: 1 }));
     history.push({
       search: `category=${queryData.category_id || ""}&per_page=${
         queryData.perPage || ""
       }&sort=${sort || ""}&product_name=${queryData.name || ""}&umkm=${
         queryData.umkm_id || ""
-      }&page=${queryData.page || ""}`,
+      }&page=${1}`,
     });
   };
 
   const onChangeProductCategory = (category_id: any) => {
-    dispatch(getProducRequest({ ...queryData, category_id }));
+    dispatch(getProducRequest({ ...queryData, category_id, page: 1 }));
     history.push({
       search: `category=${category_id || ""}&per_page=${
         queryData.perPage || 10
       }&sort=${queryData.sort || ""}&product_name=${
         queryData.name || ""
-      }&umkm=${queryData.umkm_id || ""}&page=${queryData.page || 1}`,
+      }&umkm=${queryData.umkm_id || ""}&page=${1}`,
     });
   };
   const menu = (

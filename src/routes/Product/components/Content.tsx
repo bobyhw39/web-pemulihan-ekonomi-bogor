@@ -1,10 +1,13 @@
 import { Col, Row } from "antd";
 import React from "react";
+import { AuthUser } from "../../../models/AuthUser";
 import Images from "./Images";
 import Product from "./Product";
 import Umkm from "./Umkm";
-
-export default function Content() {
+type Props = {
+  authedData?: AuthUser;
+};
+const Content: React.FC<Props> = ({ authedData }) => {
   return (
     <Row gutter={[16, 16]}>
       <Col
@@ -13,7 +16,7 @@ export default function Content() {
         md={{ order: 1, span: 24 }}
         lg={{ order: 1, span: 5 }}
       >
-        <Umkm />
+        <Umkm/>
       </Col>
       <Col
         xs={{ order: 3, span: 24 }}
@@ -21,7 +24,7 @@ export default function Content() {
         md={{ order: 2, span: 14 }}
         lg={{ order: 2, span: 11 }}
       >
-        <Product />
+        <Product authedData={authedData}/>
       </Col>
       <Col
         xs={{ order: 1, span: 24 }}
@@ -34,3 +37,4 @@ export default function Content() {
     </Row>
   );
 }
+export default Content

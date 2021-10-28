@@ -11,3 +11,6 @@ export const sendMessage =(data:any)=>{
     return services.postCM(`${endPoint.messagingUrl.v1}send`,data);
 
 }
+export const getAllUsersChat = () => {
+  return services.getCM(`${endPoint.messagingUrl.v1}get_all_users`);
+}

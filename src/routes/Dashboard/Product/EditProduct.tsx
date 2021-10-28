@@ -18,7 +18,7 @@ import ImgCrop from "antd-img-crop";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../models/RootState";
 import { endPoint } from "../../../utils/env";
-import { xssValidBool } from "../../../utils/utils";
+import { xssValidBool, beforeUpload } from "../../../utils/utils";
 import { notificationLoadingMessage } from "../../../utils/notifications";
 import { editProductRequest, getProducRequest } from "../../../actions/product";
 import { AuthUser } from "../../../models/AuthUser";
@@ -74,8 +74,13 @@ const EditProduct: React.FC<Props> = ({
     };
     let arrTemp = [];
     if (selectedObj.url_gambar) {
-      const arr = selectedObj.url_gambar.split(",");
-
+      const arr = [];
+      for (const key in selectedObj?.url_gambar) {
+        const element = selectedObj?.url_gambar[key];
+        if (element !== "") {
+          arr.push(element);
+        }
+      }
       if (arr.length === 0) {
       } else {
         let imgTemp: any = {
@@ -125,21 +130,9 @@ const EditProduct: React.FC<Props> = ({
         setimageUploads((v: any) => ({ ...v, [key]: "" }));
       }
     }
-    setFileLists(newFileList);
-  };
-  const onPreview = async (file: any) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
+    if (file.status != null) {
+      setFileLists(newFileList);
     }
-    const image = new Image();
-    image.src = src;
-    const imgWindow: any = window.open(src);
-    imgWindow.document.write(image.outerHTML);
   };
   const uploadMedia = (componentsData: any) => {
     let formData = new FormData();
@@ -221,6 +214,23 @@ const EditProduct: React.FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileLists]);
+  const [previewImages, setpreviewImages] = useState<any>({
+    previewVisible: false,
+    previewImage: "",
+    previewTitle: "",
+  });
+  const handlePreview = async (file: any) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setpreviewImages({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    });
+  };
+  const handleCancel = () => setpreviewImages({ previewVisible: false });
 
   return (
     <>
@@ -242,7 +252,7 @@ const EditProduct: React.FC<Props> = ({
             },
             {
               name: "id_klasifikasi",
-              value: selectedObj.id_kategori,
+              value: selectedObj.id_klasifikasi,
             },
             {
               name: "harga_produk",
@@ -301,7 +311,13 @@ const EditProduct: React.FC<Props> = ({
                   }),
                 ]}
               >
-                <Input placeholder="Ketik Nama Produk" />
+                <Input
+                  placeholder="Ketik Nama Produk"
+                  onKeyPress={(e) => {
+                    // eslint-disable-next-line no-useless-escape
+                    /[^A-Za-z ]/g.test(e.key) && e.preventDefault();
+                  }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -371,17 +387,31 @@ const EditProduct: React.FC<Props> = ({
                   }),
                 ]}
               >
-                <ImgCrop rotate>
+                <ImgCrop rotate beforeCrop={beforeUpload}>
                   <Upload
+                    beforeUpload={beforeUpload}
                     customRequest={uploadMedia}
                     listType="picture-card"
                     fileList={fileLists}
                     onChange={onChange}
-                    onPreview={onPreview}
+                    onPreview={handlePreview}
                   >
                     {fileLists.length < 15 && "+ Unduh"}
                   </Upload>
                 </ImgCrop>
+
+                <Modal
+                  visible={previewImages.previewVisible}
+                  title={previewImages.previewTitle}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src={previewImages.previewImage}
+                  />
+                </Modal>
               </Form.Item>
             </Col>
 
@@ -541,3 +571,6 @@ const EditProduct: React.FC<Props> = ({
 };
 
 export default EditProduct;
+function getBase64(originFileObj: any): any {
+  throw new Error("Function not implemented.");
+}

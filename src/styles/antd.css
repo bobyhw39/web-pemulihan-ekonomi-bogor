@@ -19,6 +19,6 @@ input[type=number] {
 
 @media (max-width: 480px) {
     .container {
-        margin: 24px 12px !important;
+        margin: 24px 0px !important;
     }
 }

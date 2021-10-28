@@ -50,3 +50,18 @@ export const resetPasswordError = defaultActionCreator(
   RESET_PASSWORD_ERROR,
   "data"
 );
+
+
+export const LOGIN_ADMIN_REQUEST = "LOGIN_ADMIN_REQUEST";
+export const loginAdminRequest = defaultActionCreator(LOGIN_ADMIN_REQUEST, "data");
+export const LOGIN_ADMIN_SUCCESS = "LOGIN_ADMIN_SUCCESS";
+export const loginAdminSuccess = defaultActionCreator(LOGIN_ADMIN_SUCCESS, "data");
+export const LOGIN_ADMIN_ERROR = "LOGIN_ADMIN_ERROR";
+export const loginAdminError = defaultActionCreator(LOGIN_ADMIN_ERROR, "data");
+
+export const LOGOUT_ADMIN_REQUEST = "LOGOUT_ADMIN_REQUEST";
+export const LogoutAdminRequest = defaultActionCreator(LOGOUT_ADMIN_REQUEST, "data");
+export const LOGOUT_ADMIN_SUCCESS = "LOGOUT_ADMIN_SUCCESS";
+export const LogoutAdminSuccess = defaultActionCreator(LOGOUT_ADMIN_SUCCESS, "data");
+export const LOGOUT_ADMIN_ERROR = "LOGOUT_ADMIN_ERROR";
+export const LogoutAdminError = defaultActionCreator(LOGOUT_ADMIN_ERROR, "data");

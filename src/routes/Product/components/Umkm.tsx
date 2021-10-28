@@ -12,7 +12,7 @@ import { MoreOutlined } from "@ant-design/icons";
 
 export default function Umkm() {
   const { data } = useSelector((state: RootState) => state.user);
-  const detailUmkm = JSON.parse(data?.data?.umkm_detail || "{}");
+  const detailUmkm = data?.data?.umkm_detail
   const menu = (
     <Menu>
       <Menu.Item icon={<img alt="" src={IcWhatsapp} />}>

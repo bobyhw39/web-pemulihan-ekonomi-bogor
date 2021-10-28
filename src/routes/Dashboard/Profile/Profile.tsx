@@ -20,7 +20,7 @@ const Profile: React.FC<Props> = ({ authedData }) => {
   const detailUmkm = data?.data?.umkm_detail;
   useEffect(() => {
     dispatch(getUserByIdRequest(authedData?.user_id));
-    dispatch(getCategoriesRequest(99));
+    dispatch(getCategoriesRequest({ perPage: 99, page: 1 }));
   }, []);
   return (
     <Page title="">

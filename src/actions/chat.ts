@@ -24,3 +24,10 @@ export const sendChatError = defaultActionCreator(SEND_CHAT_ERROR, 'data')
 
 export const CHANGE_STATE_CHAT = 'CHANGE_STATE_CHAT'
 export const changeStateChatRequest = defaultActionCreator(CHANGE_STATE_CHAT, 'name','value')
+
+export const GET_ALL_USERS_CHAT_REQUEST = 'GET_ALL_USERS_CHAT_REQUEST'
+export const getAllUsersChatRequest = defaultActionCreator(GET_ALL_USERS_CHAT_REQUEST, 'data')
+export const GET_ALL_USERS_CHAT_SUCCESS = 'GET_ALL_USERS_CHAT_SUCCESS'
+export const getAllUsersChatSuccess = defaultActionCreator(GET_ALL_USERS_CHAT_SUCCESS, 'data')
+export const GET_ALL_USERS_CHAT_ERROR = 'GET_ALL_USERS_CHAT_ERROR'
+export const getAllUsersChatError = defaultActionCreator(GET_ALL_USERS_CHAT_ERROR, 'data')

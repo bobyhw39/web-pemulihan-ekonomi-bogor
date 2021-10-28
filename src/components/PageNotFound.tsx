@@ -1,15 +1,27 @@
 import { Button, Result } from "antd";
 import React from "react";
 import { useLocation } from "react-router";
+import { AuthUser } from "../models/AuthUser";
 import history from "../utils/history";
+type Props = {
+  authedData?: AuthUser;
+  authedDataAdmin?: AuthUser;
+};
 
-export default function PageNotFound() {
+const PageNotFound: React.FC<Props> = ({ authedData, authedDataAdmin }) => {
   const loc = useLocation();
-  if (loc.pathname.includes("login") || loc.pathname.includes("register")) {
-    history.push("/");
+
+  if (authedDataAdmin !== undefined || authedData !== undefined) {
+    if (loc.pathname.includes("/admin-login")) {
+      history.push("/dashboard-admin");
+    }
+    if (loc.pathname.includes("/login") || loc.pathname.includes("/register")) {
+      history.push("/");
+    }
   }
+
   const onBack = () => {
-    history.push("/");
+    history.goBack();
   };
   return (
     <Result
@@ -23,4 +35,5 @@ export default function PageNotFound() {
       }
     />
   );
-}
+};
+export default PageNotFound;

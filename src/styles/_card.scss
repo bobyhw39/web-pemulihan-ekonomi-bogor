@@ -34,6 +34,11 @@
     margin: 0;
   }
 }
+.product-card {
+  .ant-card-body {
+    padding: 0 !important;
+  }
+}
 @media (max-width: 398px) {
   .search-page .ant-card-body {
     padding: 0 !important;

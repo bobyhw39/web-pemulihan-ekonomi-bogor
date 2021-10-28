@@ -8,9 +8,15 @@ import user from "./user";
 import chat from "./chat";
 import infoWisata from "./infoWIsata";
 import faq from "./faq";
+import dashboard from './dashboard'
+import admin from './admin'
+import categoryFaq from './categoryFaq'
 
 export default function* rootSaga() {
   yield all([
+    categoryFaq,
+    admin,
+    dashboard,
     faq,
     infoWisata,
     chat,

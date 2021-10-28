@@ -19,12 +19,19 @@ export function* postProductF(action: any) {
       type: productAction.POST_PRODUCT_SUCCESS,
       data,
     });
+    notificationMessage("success", `Berhasi`, `data telah disimpan`);
     yield action.func();
   } catch (e: any) {
     yield put({
       type: productAction.POST_PRODUCT_ERROR,
       data: e,
     });
+
+    notificationMessage(
+      "error",
+      e?.response?.data?.message || `Gagal menyimpan`,
+      e?.response?.data?.responseDescription || `coba beberapa saat lagi`
+    );
   }
 }
 
@@ -106,14 +113,18 @@ export function* editProductF(action: any) {
       type: productAction.EDIT_PRODUCT_SUCCESS,
       data,
     });
-    notificationMessage("success", `Berhasi`, `data telah diubah`);
+    notificationMessage("success", `Berhasi`, `data telah disimpan`);
     yield action.func();
   } catch (e: any) {
     yield put({
       type: productAction.EDIT_PRODUCT_ERROR,
       data: e,
     });
-    notificationMessage("error", `Gagal`, `data gagal diubah`);
+    notificationMessage(
+      "error",
+      e?.response?.data?.message || `Gagal menyimpan`,
+      e?.response?.data?.responseDescription || `coba beberapa saat lagi`
+    );
   }
 }
 
@@ -132,7 +143,11 @@ export function* deleteProductF(action: any) {
       type: productAction.DELETE_PRODUCT_ERROR,
       data: e,
     });
-    notificationMessage("error", `Gagal`, `data gagal dihapus`);
+    notificationMessage(
+      "error",
+      e?.response?.data?.message || `Gagal menghapus`,
+      e?.response?.data?.responseDescription || `coba beberapa saat lagi`
+    );
   }
 }
 

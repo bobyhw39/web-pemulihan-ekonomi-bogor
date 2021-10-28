@@ -4,6 +4,7 @@ const initialState = {
   dataMessage: null,
   inputMessage: null,
   userList: null,
+  users: null,
   selectedUserID: null,
   isLoading: null,
   isMessageLoading: null,
@@ -32,12 +33,20 @@ export default function reducer(state = initialState, action: any) {
         isError: false,
         userList: action.data,
       };
+      
     case chatAction.GET_ALL_USER_CHAT_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: false,
       };
+      
+      case chatAction.GET_ALL_USERS_CHAT_SUCCESS:
+        return {
+          ...state,
+          users: action.data,
+        };
+        
     case chatAction.GET_HISTORY_CHAT_REQUEST:
       return {
         ...state,

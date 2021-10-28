@@ -1,5 +1,5 @@
 .flicking-viewport {
-  height: 300px !important;
+  height: 500px !important;
 }
 .button-group,
 .flicking-viewport.vertical,
@@ -822,7 +822,7 @@ article a {
 }
 .flicking-panel {
   width: 50%;
-  height: 200px;
+  /* height: 200px; */
   display: flex;
   border-radius: 50px;
   margin-right: 10px;
@@ -1487,8 +1487,8 @@ html[data-theme="dark"] .main-icon {
   background: rgba(0, 0, 0, 0.1);
 }
 .panel-image {
-  top: -100%;
-  bottom: -100%;
+  /* top: -100%; */
+  /* bottom: -100%; */
   width: 100%;
   margin: auto;
   position: absolute;
@@ -2809,8 +2809,28 @@ a.cmm_pg_prev {
     white-space: pre-wrap;
   }
 }
+@media (max-width: 1720px) {
+  .flicking-viewport {
+    height: 400px !important;
+  }
+}
+@media (max-width: 1370px) {
+  .flicking-viewport {
+    height: 350px !important;
+  }
+}
+@media (max-width: 1317px) {
+  .flicking-viewport {
+    height: 300px !important;
+  }
+}
+@media (max-width: 971px) {
+  .flicking-viewport {
+    height: 250px !important;
+  }
+}
 
-@media (max-width: 816px) {
+@media (max-width: 760px) {
   .flicking-viewport {
     height: 200px !important;
   }
@@ -2818,9 +2838,21 @@ a.cmm_pg_prev {
 
 @media (max-width: 650px) {
   .flicking-viewport {
-    height: 250px !important;
+    height: 350px !important;
   }
   .flicking-panel {
     width: 100% !important;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .flicking-viewport {
+    height: 250px !important;
+  }
+}
+@media (max-width: 379px) {
+  .flicking-viewport {
+    height: 200px !important;
   }
 }

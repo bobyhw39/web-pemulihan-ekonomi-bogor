@@ -3,7 +3,10 @@ import React, { useRef, useState } from "react";
 import ChatCollapse from "./ChatCollapse";
 import "./styles.scss";
 
-export default function Chat() {
+type Props = {
+  authedData?: any;
+};
+ const Chat:React.FC<Props>  = ({authedData})=> {
   const [isOpen, setisOpen] = useState(false);
 
   const oldPositionX = useRef(0);
@@ -124,7 +127,8 @@ export default function Chat() {
       >
         <WechatOutlined style={{ fontSize: "32px" }} />
       </button>
-      <ChatCollapse isModal={true} isOpen={isOpen} setIsOpen={closeChat} />
+      <ChatCollapse isModal={true} isOpen={isOpen} setIsOpen={closeChat} authedData={authedData}/>
     </div>
   );
 }
+export default Chat
